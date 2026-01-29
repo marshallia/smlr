@@ -1,0 +1,50 @@
+# configs/default.yaml
+seed: 42
+device: "cuda:0"
+train_mode: "supervised" 
+num_classes: 104  # options: "contrastive" or "supervised"
+
+model:
+  name: "ViT-B-32"        # or "ViT-L-14"
+  use_open_clip: true
+  freeze_vision: True
+  freeze_text: True
+  freeze_projection: false
+  proj_dim: null          # keep CLIP’s native projection
+train:
+  batch_size: 32
+  num_workers: 8
+  epochs: 100
+  lr_backbone: 1.0e-4 #1.0e-5
+  lr_head: 5.0e-4 #5.0e-5
+  weight_decay: 0.2
+  grad_clip_norm: 1.0
+  amp: true
+  scheduler: "cosine"
+  warmup_steps: 1000
+loss:
+  temperature_init: 0.07
+  temperature_learnable: true
+data:
+  train_root: "data/train"
+  val_root: "data/val"
+  csv_mode: True         # set true if using CSVs
+  train_csv: source_train.csv
+  val_csv: source_val.csv
+
+target:
+  train_csv: target_train.csv
+  val_csv: target_val.csv
+prompts:
+  template: "a photo of a {label}"
+  augment_templates:
+    - "an image of {label}"
+    - "a detailed close-up of {label}"
+    - "a {label} in its typical environment"
+logging:
+  out_dir: "runs/supervised"
+  save_every: 1
+  eval_every: 1
+viz:
+  sample_per_class: 64
+  reducer: "umap"         # or "tsne"

@@ -1,0 +1,25 @@
+# config.yaml
+data_csv: "data/data.csv" #"data/M58_79classes_targetImage_descriptions.csv" #
+images_root: "data/raw"
+fusion_method: "concat"
+text_weight: 0.5
+
+umap:
+  n_neighbors: 30 # 15 finer structure, 30 balanced, 50 global structure
+  min_dist: 0.1 # 0 for very tight cluster, 0.1 balanced, 0.3 more overlap
+  clustering_components: 10 # 5 for small tight cluster, 10 best for general purpose, 20 complex cluster shape
+  viz_components: 2
+  random_state: 42
+
+clustering:
+  method: "kmeans"   # or "hdbscan"
+  n_clusters: 79     # used only for kmeans
+  hdbscan_min_cluster_size: 30
+  hdbscan_min_samples: 10
+  random_state: 42
+
+output:
+  save_csv: "results/clustered_components.csv"
+  per_class_csv: "results/cluster_quality.json"
+  umap_viz: "results/umap_clusters.png"
+  viz_path: "results/cluster_vs_ground_truth.png"

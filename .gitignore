@@ -1,3 +1,6 @@
-./data
+./data/processed
+./data/raw
+./data/train
+./data/val
 ./runs
 ./results
